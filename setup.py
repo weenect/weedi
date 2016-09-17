@@ -13,5 +13,10 @@ setup(
   keywords = ['di', 'dependency injection', 'entry points', 'services', 'setuptools'],
   classifiers = [],
   install_requires=('configobj'),
-  test_suite = "weedi.tests"
+  test_suite = "weedi.tests",
+  entry_points='''
+      [weedi.test.success]
+      service1 = weedi.tests.services.Service1
+      service2 = weedi.tests.services.Service2
+  ''',
 )
