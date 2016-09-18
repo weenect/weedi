@@ -13,6 +13,11 @@ class ServiceMissing(WeediException):
     pass
 
 
+class ServiceWrongPriority(WeediException):
+    "Raised when trying to inject a service which has not been loaded yet"
+    pass
+
+
 class WrongConfiguration(WeediException):
     "Raised when there is an error in the configuration file"
     pass

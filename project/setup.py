@@ -8,12 +8,7 @@
 # approval from Hareau SAS is strictly forbidden.
 # =-
 
-import os
-import sys
-
 from setuptools import setup, find_packages
-
-sys.path.insert(0, os.path.normpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')))
 
 setup(
     name='project',
@@ -29,6 +24,18 @@ setup(
     entry_points='''
         [services]
         database = project.services:Database
+        mail = project.services:Mail
+        manager = project.services:Manager
+
+        [services.missing]
+        database = project.services:Database
+        manager = project.services:Manager
+
+        [services.configuration]
+        config = project.services:ConfigurationNeededService
+
+        [services.priority]
+        database = project.services:DatabaseUnpriorized
         mail = project.services:Mail
         manager = project.services:Manager
     ''',

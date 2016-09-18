@@ -36,7 +36,7 @@ class LoadablesRepository(dict):
         if conf_filename is not None:
             self.load(conf_filename, conf)
 
-    def load(self, conf_filename, conf):
+    def load(self, conf_filename=None, conf={}):
         """Load the configuration from the config file, configure and instanciate the services and register them in
         the repository
 
@@ -73,7 +73,7 @@ class LoadablesRepository(dict):
         :rtype: :class:`configobj.Section`
         """
         if not self.conf_section:
-            return {}
+            return dict(conf)
 
         spec = {name: loadable.spec for name, loadable in self.items()}
         spec = configobj.ConfigObj({self.conf_section: spec}, encoding='utf-8')
@@ -105,14 +105,19 @@ class LoadablesRepository(dict):
         args = inspect.getargspec(f.__init__ if isinstance(f, type) else f)
 
         services = dict(zip(reversed(args.args), reversed(args.defaults or ())))
-        services.update({name + '_service': service for name, service in self.items()})
+        services.update({name + '_service': service for name, service in self.items() if not inspect.isclass(service)})
         services['services_service'] = self
 
         try:
             return {name: services[name] for name in args.args if name.endswith('_service')}
         except KeyError as e:
-            self.logger.critical("Service <%s> doesn't exist", e.args[0][:-8])
-            raise exc.ServiceMissing(e.args[0][:-8])
+            name = e.args[0][:-8]
+            if name not in self:
+                self.logger.critical("Service %s <%s> doesn't exist", self.entry_point, name)
+                raise exc.ServiceMissing(name)
+            else:
+                self.logger.critical("Service %s <%s> has not been priorized", self.entry_point, name)
+                raise exc.ServiceWrongPriority(name)
 
     def __call__(self, f, *args, **kw):
         """ The injector method. It injects the service needed by `f`, calls it and returns it
