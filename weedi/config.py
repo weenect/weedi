@@ -1,26 +1,21 @@
-# =-
-# (C)opyright Hareau SAS 2013-2016
-#
-# This is a Hareau SAS proprietary source code.
-# Any reproduction modification or use without prior written
-# approval from Hareau SAS is strictly forbidden.
-# =-
+# -*- coding: utf-8 -*-
 
-"""Helper to validate a configuration"""
+"Helper to validate a configuration"
 
 import configobj
 from validate import Validator
 
+import weedi.exc as exc
+
 
 def _validate(filename, config):
-    """Validate a ``ConfigObj`` object
+    """Validate a :class:`configobj.ConfigObj` object
 
-    In:
-      -  ``filename`` -- the path to the configuration file
-      - ``config`` -- the ``ConfigObj`` object, created from the configuration file
-
-    Return:
-      - yield the error messages
+    :param str filename: the path to the configuration file
+    :param config: the ``ConfigObj`` object, created from the configuration file
+    :type config: :class:`configobj.ConfigObj`
+    :return: yield the error messages
+    :rtype: iterator or str
     """
     errors = configobj.flatten_errors(config, config.validate(Validator(), preserve_errors=True))
 
@@ -28,20 +23,18 @@ def _validate(filename, config):
         yield 'file "%s", section "[%s]", parameter "%s": %s' % (filename, ' / '.join(sections), name, error)
 
 
-def validate(filename, config, error):
-    """Validate a ``ConfigObj`` object
+def validate(filename, config):
+    """Validate a :class:`configobj.ConfigObj` object
 
-    In:
-      -  ``filename`` -- the path to the configuration file
-      - ``config`` -- the ``ConfigObj`` object, created from the configuration file
-      - ``error`` -- the function to call in case of configuration errors
-
-    Return:
-      - is the configuration valid ?
+    :param str filename: the path to the configuration file
+    :param config: the ``ConfigObj`` object, created from the configuration file
+    :type config: :class:`configobj.ConfigObj`
+    :return: True if configuration valid else raise Exception
+    :rtype: bool
+    :raise: :class:`weedi.exc.WrongConfiguration` if invalid configuration
     """
     errors = list(_validate(filename, config))
     if errors:
-        error('\n'.join(errors))
-        return False
+        raise exc.WrongConfiguration('\n'.join(errors))
 
     return True

@@ -4,19 +4,13 @@ VERSION = '0.1'
 
 setup(
   name = 'weedi',
-  packages = find_packages(),
+  packages = find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
   version = VERSION,
   description = 'A dependency injection system using setuptools entry points',
   author = 'Weenect',
   url = 'https://github.com/weenect/weedi',
-  download_url = 'https://github.com/weenect/weedi/' + VERSION,
-  keywords = ['di', 'dependency injection', 'entry points', 'services', 'setuptools'],
-  classifiers = [],
+  download_url = 'https://github.com/weenect/weedi/tarball/' + VERSION,
+  keywords = ['di', 'dependency injection', 'entry points', 'entry_points', 'setuptools'],
   install_requires=('configobj'),
-  test_suite = "weedi.tests",
-  entry_points='''
-      [weedi.test.success]
-      service1 = weedi.tests.services.Service1
-      service2 = weedi.tests.services.Service2
-  ''',
+  test_suite = "weedi.tests"
 )
