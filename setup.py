@@ -29,6 +29,7 @@ setup(
   download_url='https://github.com/weenect/weedi/tarball/' + VERSION,
   keywords=['di', 'dependency injection', 'entry points', 'entry_points', 'setuptools'],
   requires=['configobj'],
+  install_requires=['configobj'],
   tests_require=['mock'],
   extras_require={'test': ['mock']},
   setup_requires=['setuptools-pep8'],
