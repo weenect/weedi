@@ -24,7 +24,6 @@ setup(
   version=VERSION,
   description='A dependency injection system/container using setuptools entry points',
   long_description=read('README.rst'),
-  author='Weenect',
   url='https://github.com/weenect/weedi',
   download_url='https://github.com/weenect/weedi/tarball/' + VERSION,
   keywords=['di', 'dependency injection', 'entry points', 'entry_points', 'setuptools'],
