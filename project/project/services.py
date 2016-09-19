@@ -60,3 +60,23 @@ class ConfigurationNeededService(loadable.Service):
 
 class DatabaseUnpriorized(Database):
     load_priority = 10
+
+
+class InstanciatedOutsideContainer(object):
+    def __init__(self, database_service, mail_service):
+        self.db = database_service
+        self.mail = mail_service
+        self.manager = None
+
+    def set_services(self, manager_service):
+        self.manager = manager_service
+
+
+class ServiceWithArguments(object):
+    def __init__(self, param1, param2, database_service, mail_service, param3=None, param4={}):
+        self.param1 = param1
+        self.param2 = param2
+        self.param3 = param3
+        self.param4 = param4
+        self.db = database_service
+        self.mail = mail_service

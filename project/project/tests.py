@@ -89,6 +89,32 @@ class TestServicesRepository(unittest.TestCase):
         self.assertEqual(service_repository['manager'].db, service_repository['database'])
         self.assertEqual(service_repository['manager'].mail, service_repository['mail'])
 
+    def test_instanciate_and_inject_outside_container(self):
+        service_repository = repository.ServicesRepository()
+        service_repository.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini'))
+
+        new_object = service_repository(services.InstanciatedOutsideContainer)
+        self.assertEqual(new_object.db, service_repository['database'])
+        self.assertEqual(new_object.mail, service_repository['mail'])
+        self.assertIsNone(new_object.manager)
+
+        service_repository(new_object.set_services)
+        self.assertEqual(new_object.db, service_repository['database'])
+        self.assertEqual(new_object.mail, service_repository['mail'])
+        self.assertEqual(new_object.manager, service_repository['manager'])
+
+    def test_instanciate_with_args_not_managed_by_container(self):
+        service_repository = repository.ServicesRepository()
+        service_repository.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini'))
+
+        new_object = service_repository(services.ServiceWithArguments, 'param1', 'param2', param4="param4")
+        self.assertEqual(new_object.db, service_repository['database'])
+        self.assertEqual(new_object.mail, service_repository['mail'])
+        self.assertEqual(new_object.param1, "param1")
+        self.assertEqual(new_object.param2, "param2")
+        self.assertIsNone(new_object.param3)
+        self.assertEqual(new_object.param4, "param4")
+
 
 class TestMissingServicesRepository(unittest.TestCase):
     def test_missing_service(self):
