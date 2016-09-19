@@ -129,4 +129,31 @@ assert new_instance.db == service_repository['database']
 assert new_instance.manager == service_repository['manager']
 ```
 
+You can pass arguments to the called function when using the container :
+
+```python
+class ObjectWithArgs(object):
+  def __init__(self, param1, param2, database_service, param3=None, param4={}):
+    self.db = database_service
+    self.param1 = param1
+    self.param2 = param2
+    self.param3 = param3
+    self.param4 = param4
+
+new_instance = service_repository(ObjectWithArgs, 'param1', 'param2', param4='param4')
+assert new_instance.db == service_repository['database']
+assert new_instance.param1 == 'param1'
+assert new_instance.param2 == 'param2'
+assert new_instance.param3 is None
+assert new_instance.param4 == 'param4'
+```
+
 **The `project` folder is used to both run functional tests and to provide examples of use cases. Don't hesitate to go see the [test cases](https://github.com/weenect/weedi/blob/master/project/project/tests.py)**
+
+## Troubleshooting.
+
+* You are getting an exception `ServiceWrongPriority` : change the load_priority value of your services to change the order of instanciation. The lesser the value is, the sooner it is instanciated.
+
+* You are getting an exception `ServiceMissing` : you forgot to define (or mispelled) a service definition in your project entry points.
+
+* You are getting an exception `WrongConfiguration` : You are missing some configuration key for a service in your config file or you are missing a config file altogether.
