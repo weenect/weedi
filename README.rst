@@ -15,6 +15,8 @@ opensourced and maintained by Weenect.
 
 It is tested for python's versions 2.7, 3.3, 3.4 and 3.5
 
+-  Link on `Pypi <https://pypi.python.org/pypi/weedi>`__
+
 Installation
 ------------
 
@@ -66,6 +68,9 @@ You will have these class in a module ``services.py`` :
     class LocatorManager(loadable.Service):
         def __init__(self, database_service):
             self.db = database_service
+
+*Your services needs to extend ``weedi.loadable.Loadable``. If not,
+just provide 2 class attributes : ``load_priority`` and ``spec``**
 
 You need to register these services in the ``entry_points`` or your
 project ``setup.py``.
