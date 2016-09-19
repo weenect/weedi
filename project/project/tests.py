@@ -97,7 +97,7 @@ class TestMissingServicesRepository(unittest.TestCase):
         with self.assertRaises(weedi.exc.ServiceMissing) as raised_ctx:
             service_repository.load()
         raised_exc = raised_ctx.exception
-        self.assertEqual(raised_exc.message, 'mail')
+        self.assertEqual(str(raised_exc), 'mail')
 
 
 class TestMissingConfigServicesRepository(unittest.TestCase):
@@ -106,15 +106,15 @@ class TestMissingConfigServicesRepository(unittest.TestCase):
         with self.assertRaises(weedi.exc.WrongConfiguration) as raised_ctx:
             service_repository.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini'))
         raised_exc = raised_ctx.exception
-        self.assertTrue('section "[services_configuration / config]", parameter "param1": False' in raised_exc.message)
-        self.assertTrue('section "[services_configuration / config]", parameter "param2": False' in raised_exc.message)
+        self.assertTrue('section "[services_configuration / config]", parameter "param1": False' in str(raised_exc))
+        self.assertTrue('section "[services_configuration / config]", parameter "param2": False' in str(raised_exc))
 
     def test_missing_config_without_config_file(self):
         service_repository = repository.ConfigurationServicesRepository()
         with self.assertRaises(weedi.exc.WrongConfiguration) as raised_ctx:
             service_repository.load()
         raised_exc = raised_ctx.exception
-        self.assertTrue('file "None", section "[services_configuration]", parameter "None": False' in raised_exc.message)
+        self.assertTrue('file "None", section "[services_configuration]", parameter "None": False' in str(raised_exc))
 
 
 class TestUnpriorizedServicesRepository(unittest.TestCase):
@@ -123,7 +123,7 @@ class TestUnpriorizedServicesRepository(unittest.TestCase):
         with self.assertRaises(weedi.exc.ServiceWrongPriority) as raised_ctx:
             service_repository.load(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'config.ini'))
         raised_exc = raised_ctx.exception
-        self.assertEqual(raised_exc.message, 'database')
+        self.assertEqual(str(raised_exc), 'database')
 
 
 if __name__ == '__main__':
