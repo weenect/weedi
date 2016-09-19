@@ -10,7 +10,7 @@ Weedi is a dependency injection container based on
 `setuptools <https://setuptools.readthedocs.io/en/latest/>`__ and `entry
 points <https://setuptools.readthedocs.io/en/latest/pkg_resources.html#entry-points>`__.
 
-It was first developed by [@Net-ng](https://github.com/Net-ng) and later
+It was first developed by `Net-ng <https://github.com/Net-ng>`__ and later
 opensourced and maintained by Weenect.
 
 It is tested for python's versions 2.7, 3.3, 3.4 and 3.5
@@ -170,8 +170,8 @@ You can pass arguments to the called function when using the container :
     assert new_instance.param4 == 'param4'
 
 **The ``project`` folder is used to both run functional tests and to
-provide examples of use cases. Don't hesitate to go see the `test
-cases <https://github.com/weenect/weedi/blob/master/project/project/tests.py>`__**
+provide examples of use cases. Don't hesitate to go see the test
+cases** : `https://github.com/weenect/weedi/blob/master/project/project/tests.py <https://github.com/weenect/weedi/blob/master/project/project/tests.py>`__
 
 Troubleshooting.
 ----------------
