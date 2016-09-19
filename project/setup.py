@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-
-# =-
-# (C)opyright Hareau SAS 2013-2016
 #
-# This is a Hareau SAS proprietary source code.
-# Any reproduction modification or use without prior written
-# approval from Hareau SAS is strictly forbidden.
-# =-
+# (c) 2016 Hareau SAS / Weenect, https://www.weenect.com
+#
+# This file is part of the weedi library
+#
+# MIT License : https://raw.githubusercontent.com/weenect/weedi/master/LICENSE.txt
 
 from setuptools import setup, find_packages
 
