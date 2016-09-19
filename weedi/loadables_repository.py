@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+#
+# (c) 2016 Hareau SAS / Weenect, https://www.weenect.com
+#
+# This file is part of the weedi library
+#
+# MIT License : https://raw.githubusercontent.com/weenect/weedi/master/LICENSE.txt
 
 "The repository of all services in charge of loading the configuration, instanciating the services and injecting them"
 
